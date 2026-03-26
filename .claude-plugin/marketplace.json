@@ -1,0 +1,21 @@
+{
+  "name": "SamirL-prompt-optimizer",
+  "owner": {
+    "name": "SamirL"
+  },
+  "metadata": {
+    "description": "Prompt optimization skill for Claude Code",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "prompt-optimizer",
+      "description": "Analyzes and improves your prompts before executing them",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/prompt-optimizer"
+      ]
+    }
+  ]
+}
