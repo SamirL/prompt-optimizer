@@ -17,7 +17,7 @@ A Claude Code skill that analyzes and improves your prompts before executing the
 Register this repo as a skill marketplace in Claude Code:
 
 ```bash
-/plugin marketplace add sam-prompt-optimizer
+/plugin marketplace add SamirL/prompt-optimizer
 ```
 
 Then browse and install the skill from the marketplace UI.
@@ -25,8 +25,8 @@ Then browse and install the skill from the marketplace UI.
 ### Option B: Manual install
 
 ```bash
-git clone https://github.com/SamirL/prompt-optimizer-repo.git
-cp -r prompt-optimizer-repo/skills/prompt-optimizer ~/.claude/skills/
+git clone https://github.com/SamirL/prompt-optimizer.git
+cp -r prompt-optimizer/skills/prompt-optimizer ~/.claude/skills/
 ```
 
 ### Option C: Direct copy
