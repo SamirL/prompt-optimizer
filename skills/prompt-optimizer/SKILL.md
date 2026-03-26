@@ -78,13 +78,50 @@ AskUserQuestion with questions:
    - "Self-deprecating tech humor" — Poking fun at the industry
 ```
 
+**When the prompt involves a specific topic**, consider adding a research question:
+```
+AskUserQuestion with questions:
+1. header: "Research"
+   question: "Should I look up current details about [topic] to make the prompt more accurate?"
+   options:
+   - "Yes, research it (Recommended)" — I'll search for current specs, versions, known issues, etc.
+   - "No, general knowledge is fine" — Skip the lookup, optimize with what you know
+```
+
 **When to skip this step:**
 - If the prompt is clear enough that you can make all reasonable assumptions, **skip straight to optimization**. Not every prompt needs a conversation.
 - If there's only one minor ambiguity, you can handle it with an assumption noted in your output instead of a full question.
 
+### Step 2.5 — Research the topic (when it helps)
+
+Before optimizing, check whether the prompt involves something you should look up — a specific product, game, API, framework, recent event, or any technical detail that might be outdated or wrong in your training data.
+
+**Use `WebSearch` to research when:**
+- The prompt names a specific product, tool, game, or service (e.g., "Crimson Desert", "Supabase Auth", "the new iOS 19 APIs")
+- Technical details matter and could be wrong — versions, anti-cheat systems, API changes, library compatibility
+- The topic is recent enough that your knowledge might be stale or incomplete
+- Getting a fact wrong would make the optimized prompt misleading or useless
+
+**Skip research when:**
+- The prompt is generic and your knowledge is sufficient ("write a blog post about ML")
+- It's purely creative with no factual grounding needed
+- The user explicitly said not to research or chose "use general knowledge" in Step 2
+
+**How to research well:**
+1. Formulate 1-2 targeted search queries based on the prompt's key unknowns — what specifically would you need to verify or learn?
+2. Use `WebSearch` to find answers. Use `WebFetch` on the most relevant result if you need deeper detail.
+3. Extract only the facts that matter for the optimization. You're not writing a research report — you're gathering the specific details that will make the optimized prompt accurate.
+4. Weave findings into the prompt as concrete facts, not hedged guesses. Instead of "check what engine the game uses", write "Crimson Desert runs on the proprietary BlackSpace Engine and uses EasyAntiCheat."
+
+**What to tell the user:**
+After researching, briefly mention what you found in a single line before presenting the optimized prompt:
+> "I looked up Crimson Desert — it uses the BlackSpace Engine and has EasyAntiCheat, which I've factored into the prompt."
+
+Don't dump raw search results. The value is in the optimized prompt being more accurate, not in showing your research process.
+
 ### Step 3 — Analyze and optimize
 
-Using the user's input from Step 2 (or your own judgment if you skipped it), identify what's weak and fix it. Focus on failure modes — the specific ways a model would get the output wrong.
+Using the user's input from Step 2, your research from Step 2.5 (if applicable), and your own judgment, identify what's weak and fix it. Focus on failure modes — the specific ways a model would get the output wrong. Where you have researched facts, use them to replace generic assumptions with concrete details.
 
 **Techniques to apply (only when they fix a real problem):**
 
@@ -188,6 +225,19 @@ If the prompt doesn't need real optimization, say so honestly:
 **User selects:** Quick script, CLI only
 
 **Optimizer:** *(produces optimized prompt, then uses `AskUserQuestion` for next step: Run it / Add detail / Simplify / Start over)*
+
+### Interactive flow with research — specific topic
+
+**User:** "optimize this prompt: I want to analyze the game Crimson Desert and build a tool to modify character HP, stamina etc"
+
+**Optimizer uses `AskUserQuestion`:**
+- Question 1 (header: "Approach"): "What approach should the prompt target?" → Check viability first (Recommended) / Assume memory editing works / Save file editing
+- Question 2 (header: "Interface"): "What kind of interface?" → Simple GUI (Recommended) / CLI only / Web-based
+- Question 3 (header: "Research"): "Should I look up Crimson Desert's engine and anti-cheat?" → Yes, research it (Recommended) / No, general knowledge
+
+**User selects:** Check first, Simple GUI, Yes research it
+
+**Optimizer researches** using `WebSearch`: "Crimson Desert PC engine anti-cheat 2025" — finds it uses BlackSpace Engine and EasyAntiCheat. Mentions this briefly, then produces an optimized prompt with those real facts baked in instead of "likely Unreal Engine 5" guesses.
 
 ### Interactive flow — ambiguous creative prompt
 
