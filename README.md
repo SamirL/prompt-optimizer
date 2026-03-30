@@ -8,6 +8,7 @@ A collection of skills that augment AI coding agents. Works with Claude Code and
 |---|---|
 | [prompt-optimizer](skills/prompt-optimizer/) | Analyzes and improves your prompts before executing them |
 | [external-review](skills/external-review/) | Sends your coding work to an external LLM (Codex CLI) for independent review |
+| [kanban](skills/kanban/) | Project Kanban board with autonomous task tracking (Todo/Doing/Review/Done) |
 
 ## Installation
 

@@ -15,7 +15,8 @@
       "strict": false,
       "skills": [
         "./skills/prompt-optimizer",
-        "./skills/external-review"
+        "./skills/external-review",
+        "./skills/kanban"
       ]
     }
   ]
