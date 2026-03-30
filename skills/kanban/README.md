@@ -26,8 +26,29 @@ A project-scoped Kanban board for AI coding agents. Track tasks across four colu
 Also works with plain requests:
 - "Add 'fix login bug' to the board"
 - "What's on the board?"
+- "Show me the kanban"
 - "Move the auth task to review"
+- "What am I working on?" (shows Doing column)
 - "Break down task 2 into subtasks"
+- "Clear the done tasks"
+
+## Display
+
+The board is displayed as a horizontal kanban using Unicode box-drawing characters:
+
+```
+┌──────────────────┬──────────────────┬──────────────────┬──────────────────┐
+│    Todo (2)      │   Doing (1)      │  Review (0)      │    Done (1)      │
+├──────────────────┼──────────────────┼──────────────────┼──────────────────┤
+│                  │                  │                  │                  │
+│ #1 Fix login bug │ #3 Refactor auth │                  │ #4 Setup CI      │
+│                  │            [2/3] │                  │                  │
+│ #2 Add input     │  ✓ Extract token │                  │                  │
+│    validation    │  ✓ Refresh flow  │                  │                  │
+│                  │  · Update tests  │                  │                  │
+│                  │                  │                  │                  │
+└──────────────────┴──────────────────┴──────────────────┴──────────────────┘
+```
 
 ## Storage format
 
